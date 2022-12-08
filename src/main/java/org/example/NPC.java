@@ -80,32 +80,15 @@ public abstract class NPC implements NPCInterface {
         String sDelivery, sMagic;
         if (delivery) sDelivery = "может";
         else sDelivery = "не может";
-        return getClass().getSimpleName() + " " + atac + ", защита = " + defence + "\nвыстрелы = " + shots +
+        return getClass().getSimpleName() + " атака = " + atac + ", защита = " + defence + "\nвыстрелы = " + shots +
                 ", damage = " + Arrays.toString(damage) + "\nhealth = " + maxHealth +
                 ", speeds = " + speed + "\nдоставить " + sDelivery +
-                "\nимя персонажа: " + name + " сторона = " + team + "\n ----------------------------------";
+                "\nимя персонажа: " + name + "\n ----------------------------------";
     }
 
 
     @Override
     public void step(ArrayList<NPC> team) {
-        NPC minHealth = team.get(0);
-        double min = minHealth.health / minHealth.maxHealth;
-        double mayBeMin;
-        for (int i = 1; i < team.size(); i++) {
-            NPC mayBeMinHealth = team.get(i);
-            mayBeMin = mayBeMinHealth.health / mayBeMinHealth.maxHealth;
-            if (min > mayBeMin) {
-                min = mayBeMin;
-                minHealth = mayBeMinHealth;
-            }
-        }
-
-        if (minHealth.getHealth() - getDamage()[0] > minHealth.getMaxHealth()) {
-            minHealth.setHealth(minHealth.getMaxHealth());
-        } else {
-            minHealth.setHealth(minHealth.getHealth() - getDamage()[0]);
-        }
 
     }
 }
