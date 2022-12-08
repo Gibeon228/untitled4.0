@@ -3,28 +3,40 @@ package org.example;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public abstract class NPC {
+public abstract class NPC implements NPCInterface {
     private int atac;
     private int defence;
     private int shots;
     private int[] damage;
+    private int maxHealth;
     private int health;
     private int speed;
     private boolean delivery;
-    private boolean magic;
     private String name;
+    protected ArrayList<NPC> team;
 
     public NPC(int atac, int defence, int shots, int[] damage, int health, int speed,
-               boolean delivery, boolean magic, String name) {
+               boolean delivery, String name) {
         this.atac = atac;
         this.defence = defence;
         this.shots = shots;
         this.damage = damage;
-        this.health = health;
+        this.maxHealth = health;
         this.speed = speed;
         this.delivery = delivery;
-        this.magic = magic;
         this.name = name;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
+    public int[] getDamage() {
+        return damage;
     }
 
     public void setAtac(int atac) {
@@ -43,12 +55,8 @@ public abstract class NPC {
         this.delivery = delivery;
     }
 
-    public void setHealth(int health) {
-        this.health = health;
-    }
-
-    public void setMagic(boolean magic) {
-        this.magic = magic;
+    public void setMaxHealth(int maxHealth) {
+        this.maxHealth = maxHealth;
     }
 
     public void setName(String name) {
@@ -63,17 +71,43 @@ public abstract class NPC {
         this.speed = speed;
     }
 
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
     @Override
-    public String toString() {
+    public String getInfo() {
         String sDelivery, sMagic;
         if (delivery) sDelivery = "может";
         else sDelivery = "не может";
-        if (magic) sMagic = "может";
-        else sMagic = "не может";
-        return "Атака = " + atac + ", защита = " + defence + "\nвыстрелы = " + shots +
-                ", damage = " + Arrays.toString(damage) + "\nhealth = " + health +
+        return getClass().getSimpleName() + " " + atac + ", защита = " + defence + "\nвыстрелы = " + shots +
+                ", damage = " + Arrays.toString(damage) + "\nhealth = " + maxHealth +
                 ", speeds = " + speed + "\nдоставить " + sDelivery +
-                ", колдовать " + sMagic + "\nимя персонажа: " + name + "\n ----------------------------------";
+                "\nимя персонажа: " + name + " сторона = " + team + "\n ----------------------------------";
     }
 
+
+    @Override
+    public void step(ArrayList<NPC> team) {
+        NPC minHealth = team.get(0);
+        double min = minHealth.health / minHealth.maxHealth;
+        double mayBeMin;
+        for (int i = 1; i < team.size(); i++) {
+            NPC mayBeMinHealth = team.get(i);
+            mayBeMin = mayBeMinHealth.health / mayBeMinHealth.maxHealth;
+            if (min > mayBeMin) {
+                min = mayBeMin;
+                minHealth = mayBeMinHealth;
+            }
+        }
+
+        if (minHealth.getHealth() - getDamage()[0] > minHealth.getMaxHealth()) {
+            minHealth.setHealth(minHealth.getMaxHealth());
+        } else {
+            minHealth.setHealth(minHealth.getHealth() - getDamage()[0]);
+        }
+
+    }
 }
+
+
