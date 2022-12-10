@@ -1,9 +1,9 @@
-package org.example;
+package chars;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class Crossbowman extends NPC{
-    public Crossbowman(ArrayList<NPC> team) {
+    public Crossbowman(List<NPC> team) {
         super(6, 3, 16, new int[]{2, 3}, 10, 4, false, "");
         super.team = team;
 
@@ -11,7 +11,7 @@ public class Crossbowman extends NPC{
     }
 
     @Override
-    public void step(ArrayList<NPC> team) {
+    public void step(List<NPC> team) {
 
     }
 }

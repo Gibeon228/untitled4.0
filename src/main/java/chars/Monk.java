@@ -1,15 +1,15 @@
-package org.example;
+package chars;
 
-import java.util.ArrayList;
+import java.util.List;
 
-public class Wizard extends NPC {
-    public Wizard(ArrayList<NPC> team) {
-        super(17, 12, 0, new int[]{-5, -5}, 30, 9, false, "");
+public class Monk extends NPC {
+    public Monk(List<NPC> team) {
+        super(12, 7, 0, new int[]{-4, -4}, 30, 5, false, "");
         super.team = team;
     }
 
     @Override
-    public void step(ArrayList<NPC> team) {
+    public void step(List<NPC> team) {
 
         NPC minHealth = team.get(0);
         double min = minHealth.getHealth() / minHealth.getMaxHealth();

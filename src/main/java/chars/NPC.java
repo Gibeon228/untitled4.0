@@ -1,6 +1,6 @@
-package org.example;
+package chars;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Arrays;
 
 public abstract class NPC implements NPCInterface {
@@ -13,7 +13,7 @@ public abstract class NPC implements NPCInterface {
     private int speed;
     private boolean delivery;
     private String name;
-    protected ArrayList<NPC> team;
+    protected List<NPC> team;
 
     public NPC(int atac, int defence, int shots, int[] damage, int health, int speed,
                boolean delivery, String name) {
@@ -88,7 +88,7 @@ public abstract class NPC implements NPCInterface {
 
 
     @Override
-    public void step(ArrayList<NPC> team) {
+    public void step(List<NPC> team) {
 
     }
 }
