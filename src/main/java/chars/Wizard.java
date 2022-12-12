@@ -2,9 +2,10 @@ package chars;
 
 import java.util.List;
 public class Wizard extends NPC {
-    public Wizard(List<NPC> team) {
-        super(17, 12, 0, new int[]{-5, -5}, 30, 9, false, "");
+    public Wizard(List<NPC> team, int x, int y) {
+        super(17, 12, 0, new int[]{-5, -5}, 30, 9, false, "Wizard");
         super.team = team;
+        super.position = new Vector2(x, y);
     }
 
     @Override

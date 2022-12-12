@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
+    <file url="file://$PROJECT_DIR$/src/main/java/Main.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/chars/Crossbowman.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/chars/Monk.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/chars/NPC.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/chars/NPCInterface.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/chars/Peasant.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/chars/Robber.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/chars/Sniper.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/chars/Spearman.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/chars/Wizard.java" charset="UTF-8" />
+    <file url="PROJECT" charset="UTF-8" />
+  </component>
+</project>

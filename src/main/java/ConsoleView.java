@@ -1,15 +1,51 @@
+import chars.NPC;
+import chars.Vector2;
+
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
+import java.util.Arrays;
 
 public class ConsoleView {
+    public static int step = 0;
+    private static final String top10 = formatDiv("a") + String.join("", Collections.nCopies(9, formatDiv("-b"))) + formatDiv("-c");
+    private static final String mid10 = formatDiv("d") + String.join("", Collections.nCopies(9, formatDiv("-e"))) + formatDiv("-f");
+    private static final String bottom10 = formatDiv("g") + String.join("", Collections.nCopies(9, formatDiv("-h"))) + formatDiv("-i");
 
-    public static final String top10 = formatDiv("a")
-            + String.join("", Collections.nCopies(9, formatDiv("-d")))
-            + formatDiv("c");
+    public static void view(){
+        if (step++ == 0) {
+            System.out.println(AnsiColors.ANSI_RED+"First step!"+AnsiColors.ANSI_RESET);
+        } else {
+            System.out.println(AnsiColors.ANSI_RED + "Step: "+step+AnsiColors.ANSI_RESET);
+        }
 
-    private static String formatDiv(String str) {
-        return str
-                .replace('a', '\u250c')
+        System.out.println(ConsoleView.top10);
+
+        for (int i = 1; i <= Main.GANG_SIZE-1; i++) {
+            for (int j = 1; j <= Main.GANG_SIZE; j++) {
+                System.out.print(getChar(new Vector2(i, j)));
+            }
+            System.out.println("|");
+            System.out.println(ConsoleView.mid10);
+        }
+
+        for (int j = 1; j <= Main.GANG_SIZE; j++) {
+            System.out.print(getChar(new Vector2(10, j)));
+        }
+        System.out.println("|");
+        System.out.println(ConsoleView.bottom10);
+    }
+
+    private static String getChar(Vector2 position){
+        String str = "| ";
+        for (int i = 0; i < Main.GANG_SIZE; i++) {
+            if (Main.darkTeam.get(i).getPosition().isEqual(position)) str ="|"+AnsiColors.ANSI_GREEN+Main.darkTeam.get(i).getName().toUpperCase().charAt(0)+AnsiColors.ANSI_RESET;
+            if (Main.whiteTeam.get(i).getPosition().isEqual(position)) str ="|"+AnsiColors.ANSI_BLUE+Main.whiteTeam.get(i).getName().toUpperCase().charAt(0)+AnsiColors.ANSI_RESET;
+        }
+        return str;
+    }
+    private static String formatDiv(String str){
+        return str.replace('a', '\u250c')
                 .replace('b', '\u252c')
                 .replace('c', '\u2510')
                 .replace('d', '\u251c')
@@ -18,7 +54,8 @@ public class ConsoleView {
                 .replace('g', '\u2514')
                 .replace('h', '\u2534')
                 .replace('i', '\u2518')
-                .replace('-', '\u2500');
+                .replace('-', '\u2500')
+                .replace("s", "...")
+                .replace("o", "___");
     }
-
 }

@@ -14,6 +14,7 @@ public abstract class NPC implements NPCInterface {
     private boolean delivery;
     private String name;
     protected List<NPC> team;
+    protected Vector2 position;
 
     public NPC(int atac, int defence, int shots, int[] damage, int health, int speed,
                boolean delivery, String name) {
@@ -27,6 +28,13 @@ public abstract class NPC implements NPCInterface {
         this.name = name;
     }
 
+    public Vector2 getPosition() {
+        return position;
+    }
+
+    public String getName() {
+        return name;
+    }
     public int getHealth() {
         return health;
     }
@@ -78,12 +86,12 @@ public abstract class NPC implements NPCInterface {
     @Override
     public String getInfo() {
         String sDelivery, sMagic;
-        if (delivery) sDelivery = "может";
-        else sDelivery = "не может";
-        return getClass().getSimpleName() + " атака = " + atac + ", защита = " + defence + "\nвыстрелы = " + shots +
+        if (delivery) sDelivery = "?????";
+        else sDelivery = "?? ?????";
+        return getClass().getSimpleName() + " atac = " + atac + ", defence = " + defence + "\nshots = " + shots +
                 ", damage = " + Arrays.toString(damage) + "\nhealth = " + maxHealth +
-                ", speeds = " + speed + "\nдоставить " + sDelivery +
-                "\nимя персонажа: " + name + "\n ----------------------------------";
+                ", speeds = " + speed + "\ncan delivery " + sDelivery +
+                "\nyour name is: " + name + "\n ----------------------------------";
     }
 
 
