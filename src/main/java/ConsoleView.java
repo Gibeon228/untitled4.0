@@ -12,16 +12,16 @@ public class ConsoleView {
     private static final String mid10 = formatDiv("d") + String.join("", Collections.nCopies(9, formatDiv("-e"))) + formatDiv("-f");
     private static final String bottom10 = formatDiv("g") + String.join("", Collections.nCopies(9, formatDiv("-h"))) + formatDiv("-i");
 
-    public static void view(){
+    public static void view() {
         if (step++ == 0) {
-            System.out.println(AnsiColors.ANSI_RED+"First step!"+AnsiColors.ANSI_RESET);
+            System.out.println(AnsiColors.ANSI_RED + "First step!" + AnsiColors.ANSI_RESET);
         } else {
-            System.out.println(AnsiColors.ANSI_RED + "Step: "+step+AnsiColors.ANSI_RESET);
+            System.out.println(AnsiColors.ANSI_RED + "Step: " + step + AnsiColors.ANSI_RESET);
         }
 
         System.out.println(ConsoleView.top10);
 
-        for (int i = 1; i <= Main.GANG_SIZE-1; i++) {
+        for (int i = 1; i <= Main.GANG_SIZE - 1; i++) {
             for (int j = 1; j <= Main.GANG_SIZE; j++) {
                 System.out.print(getChar(new Vector2(i, j)));
             }
@@ -36,15 +36,34 @@ public class ConsoleView {
         System.out.println(ConsoleView.bottom10);
     }
 
-    private static String getChar(Vector2 position){
+    private static String getChar(Vector2 position) {
         String str = "| ";
         for (int i = 0; i < Main.GANG_SIZE; i++) {
-            if (Main.darkTeam.get(i).getPosition().isEqual(position)) str ="|"+AnsiColors.ANSI_GREEN+Main.darkTeam.get(i).getName().toUpperCase().charAt(0)+AnsiColors.ANSI_RESET;
-            if (Main.whiteTeam.get(i).getPosition().isEqual(position)) str ="|"+AnsiColors.ANSI_BLUE+Main.whiteTeam.get(i).getName().toUpperCase().charAt(0)+AnsiColors.ANSI_RESET;
+            if (Main.darkTeam.get(i).getPosition().isEqual(position))
+                str = "|" + AnsiColors.ANSI_GREEN + Main.darkTeam.get(i).getName().toUpperCase().charAt(0) + AnsiColors.ANSI_RESET;
+            if (Main.whiteTeam.get(i).getPosition().isEqual(position))
+                str = "|" + AnsiColors.ANSI_BLUE + Main.whiteTeam.get(i).getName().toUpperCase().charAt(0) + AnsiColors.ANSI_RESET;
         }
         return str;
     }
-    private static String formatDiv(String str){
+
+//    public static String progressBar(int remain, int total) {
+//        int maxBarSize = 10;
+//        int remainProcent = ((100 * remain) / total / maxBarSize);
+//        char defaultChar = '-';
+//        String icon = "*";
+//        String bar = new String(new char[maxBarSize]).replace('\0', defaultChar) + "]";
+//        StringBuilder barDone = new StringBuilder();
+//        barDone.append("[");
+//        for (int i = 0; i < remainProcent; i++) {
+//            barDone.append(icon);
+//        }
+//        String barRemain = bar.substring(remainProcent, bar.length());
+//        return barDone + barRemain + " " + remainProcent * 10 + "%";
+//    }
+
+
+    private static String formatDiv(String str) {
         return str.replace('a', '\u250c')
                 .replace('b', '\u252c')
                 .replace('c', '\u2510')

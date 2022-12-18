@@ -5,7 +5,7 @@ import java.util.List;
 public class Monk extends NPC {
     public Monk(List<NPC> team, int x, int y) {
         super(12, 7, 0, new int[]{-4, -4}, 30, 5, false, "Monk");
-        super.team = team;
+        super.myTeam = team;
         super.position = new Vector2(x, y);
     }
 

@@ -1,20 +1,23 @@
 package chars;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
 
 public abstract class NPC implements NPCInterface {
     private int atac;
     private int defence;
-    private int shots;
+    protected int shots;
     private int[] damage;
     private int maxHealth;
     private int health;
     private int speed;
     private boolean delivery;
     private String name;
-    protected List<NPC> team;
+    protected List<NPC> myTeam;
     protected Vector2 position;
+
+    protected String status;
 
     public NPC(int atac, int defence, int shots, int[] damage, int health, int speed,
                boolean delivery, String name) {
@@ -26,15 +29,29 @@ public abstract class NPC implements NPCInterface {
         this.speed = speed;
         this.delivery = delivery;
         this.name = name;
+        this.status = "stand";
     }
 
     public Vector2 getPosition() {
         return position;
     }
 
+    public int getAtac() {
+        return atac;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public int getDefence() {
+        return defence;
+    }
+
     public String getName() {
         return name;
     }
+
     public int getHealth() {
         return health;
     }
@@ -45,6 +62,10 @@ public abstract class NPC implements NPCInterface {
 
     public int[] getDamage() {
         return damage;
+    }
+
+    public int getSpeed() {
+        return speed;
     }
 
     public void setAtac(int atac) {
@@ -83,11 +104,19 @@ public abstract class NPC implements NPCInterface {
         this.health = health;
     }
 
+    protected void damage(int damage) {
+        this.health = health - damage;
+        if (this.health <= 0) {
+            this.health = 0;
+            this.status = "dead";
+        }
+    }
+
     @Override
     public String getInfo() {
-        String sDelivery, sMagic;
-        if (delivery) sDelivery = "?????";
-        else sDelivery = "?? ?????";
+       String sDelivery, sMagic;
+        if (delivery) sDelivery = "может";
+        else sDelivery = "не может";
         return getClass().getSimpleName() + " atac = " + atac + ", defence = " + defence + "\nshots = " + shots +
                 ", damage = " + Arrays.toString(damage) + "\nhealth = " + maxHealth +
                 ", speeds = " + speed + "\ncan delivery " + sDelivery +
@@ -99,6 +128,21 @@ public abstract class NPC implements NPCInterface {
     public void step(List<NPC> team) {
 
     }
+
+    protected int damageValue(NPC h) {
+        if (this.getAtac() - h.getDefence() == 0) {
+            return ((this.getDamage()[0] + this.getDamage()[1]) / 2);
+        }
+        if (this.getAtac() - h.getDefence() > 0) {
+            return this.getDamage()[1];
+        }
+        if (this.getAtac() - h.getDefence() < 0) {
+            return this.getDamage()[0];
+        }
+        return 0;
+    }
+
+
 }
 
 
