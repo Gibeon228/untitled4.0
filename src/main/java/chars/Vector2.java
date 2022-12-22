@@ -9,13 +9,14 @@ public class Vector2 {
 
     }
 
-    public double getDistance (Vector2 pos) {
-        return Math.sqrt((x - pos.x) * (x - pos.x) + (y = pos.y) * (y - pos.y));
+    public float getDistance (Vector2 pos) {
+        return (float) Math.sqrt((x - pos.x) * (x - pos.x) + (y - pos.y) * (y - pos.y));
     }
 
+
+
     public boolean isEqual(Vector2 pos) {
-        if (pos.y == y & pos.x == x) return true;
-        return false;
+        return (pos.y == y & pos.x == x);
     }
 
     @Override

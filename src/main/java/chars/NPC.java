@@ -1,148 +1,142 @@
 package chars;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Arrays;
 
 public abstract class NPC implements NPCInterface {
-    private int atac;
-    private int defence;
-    protected int shots;
+    private int attack;
+    private int protection;
     private int[] damage;
-    private int maxHealth;
-    private int health;
+    private double maxHealth;
+    private double health;
     private int speed;
-    private boolean delivery;
-    private String name;
+    private States state;
+    private static int idCounter;
+    private final int playerID;
     protected List<NPC> myTeam;
     protected Vector2 position;
+    Vector2 destination;
 
-    protected String status;
-
-    public NPC(int atac, int defence, int shots, int[] damage, int health, int speed,
-               boolean delivery, String name) {
-        this.atac = atac;
-        this.defence = defence;
-        this.shots = shots;
+    public NPC(int attack, int protection, int[] damage, double health, int speed, States state) {
+        this.attack = attack;
+        this.protection = protection;
         this.damage = damage;
+        this.health = health;
         this.maxHealth = health;
         this.speed = speed;
-        this.delivery = delivery;
-        this.name = name;
-        this.status = "stand";
+        this.state = state;
+        playerID = idCounter++;
+    }
+
+    public Vector2 getDestination() {
+        if (destination == null)
+            destination = position;
+        return destination;
     }
 
     public Vector2 getPosition() {
         return position;
     }
 
-    public int getAtac() {
-        return atac;
+    public List<NPC> getMyTeam() {
+        return myTeam;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public int getDefence() {
-        return defence;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getHealth() {
-        return health;
-    }
-
-    public int getMaxHealth() {
-        return maxHealth;
+    public States getState() {
+        return state;
     }
 
     public int[] getDamage() {
         return damage;
     }
 
+    public double getHealth() {
+        return health;
+    }
+
+    public double getMaxHealth() {
+        return maxHealth;
+    }
+
+    public int getAttack() {
+        return attack;
+    }
+
+    public int getProtection() {
+        return protection;
+    }
+
     public int getSpeed() {
         return speed;
     }
 
-    public void setAtac(int atac) {
-        this.atac = atac;
+
+    public void setState(States state) {
+        this.state = state;
+        System.out.println(state);
     }
 
-    public void setDamage(int[] damage) {
-        this.damage = damage;
+    public void setDestination(Vector2 destination) {
+        this.destination = destination;
     }
 
-    public void setDefence(int defence) {
-        this.defence = defence;
+    public void setPosition(Vector2 position) {
+        this.position = position;
     }
 
-    public void setDelivery(boolean delivery) {
-        this.delivery = delivery;
+    public void setHealth(double health) {
+        if (health > getMaxHealth()) this.health = maxHealth;
+        else this.health = health;
     }
 
-    public void setMaxHealth(int maxHealth) {
-        this.maxHealth = maxHealth;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setShots(int shots) {
-        this.shots = shots;
-    }
-
-    public void setSpeed(int speed) {
-        this.speed = speed;
-    }
-
-    public void setHealth(int health) {
-        this.health = health;
-    }
-
-    protected void damage(int damage) {
-        this.health = health - damage;
-        if (this.health <= 0) {
-            this.health = 0;
-            this.status = "dead";
-        }
+    public static int getIdCounter() {
+        return idCounter;
     }
 
     @Override
     public String getInfo() {
-       String sDelivery, sMagic;
-        if (delivery) sDelivery = "может";
-        else sDelivery = "не может";
-        return getClass().getSimpleName() + " atac = " + atac + ", defence = " + defence + "\nshots = " + shots +
-                ", damage = " + Arrays.toString(damage) + "\nhealth = " + maxHealth +
-                ", speeds = " + speed + "\ncan delivery " + sDelivery +
-                "\nyour name is: " + name + "\n ----------------------------------";
+        String str = state + "";
+        String str2 = (int) health + "";
+        return getClass().getSimpleName() + str2 + "/" + (int) maxHealth + " " + str;
     }
 
+    public void updatePosition() {
+        if (destination == null)
+            destination = position;
+        position.x += (destination.x - position.x) / 20;
+        position.y += (destination.y - position.y) / 20;
+    }
+
+    public int getPlayerID() {
+        return playerID;
+    }
+
+
+    protected void getAttack(NPC h) {
+        setState(States.ATTACK);
+        h.setState(States.HURT);
+
+        if (attack == h.protection) {
+            if (speed < position.getDistance(h.getPosition())) h.health -= (damage[0] + damage[1]) / 4;
+            else h.health -= (damage[0] + damage[1]) / 2;
+        }
+        if (attack > h.protection) {
+            if (speed < position.getDistance(h.getPosition())) h.health -= damage[1] / 2;
+            else h.health -= damage[1];
+        }
+        if (attack < h.protection) {
+            if (speed < position.getDistance(h.getPosition())) h.health -= damage[0] / 2;
+            else h.health -= damage[0];
+        }
+        if (h.health <= 0) {
+            h.health = 0;
+            h.setState(States.DEAD);
+        }
+    }
 
     @Override
     public void step(List<NPC> team) {
 
     }
-
-    protected int damageValue(NPC h) {
-        if (this.getAtac() - h.getDefence() == 0) {
-            return ((this.getDamage()[0] + this.getDamage()[1]) / 2);
-        }
-        if (this.getAtac() - h.getDefence() > 0) {
-            return this.getDamage()[1];
-        }
-        if (this.getAtac() - h.getDefence() < 0) {
-            return this.getDamage()[0];
-        }
-        return 0;
-    }
-
-
 }
 
 
